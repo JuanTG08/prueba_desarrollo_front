@@ -1,0 +1,87 @@
+.mat-toolbar {
+  height: 60px;
+  font-size: 25px;
+  background-color: blue;
+  color: white;
+}
+
+.logo__style {
+  width: 40px;
+  margin-left: 5px;
+}
+
+.mat-toolbar-row {
+  height: 40px;
+}
+
+.icon {
+  padding: 0 14px;
+  transform: scale(0.9);
+}
+
+p {
+  margin: 0;
+  font-weight: 400;
+}
+
+img {
+  width: 43px;
+  height: 43px;
+  cursor: pointer;
+}
+
+.menu {
+  background-color: transparent;
+  color: transparent;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.temp-icon {
+  font-size: 22px;
+  position: relative;
+  left: 5px;
+}
+
+.kit-icon {
+  font-size: 20px;
+  position: relative;
+  left: 2px;
+}
+
+.qr-icon {
+  font-size: 20px;
+}
+// -----------------------------
+.topbar__container {
+  height: 45px;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px 0 0;
+}
+
+.logo__style {
+  width: 40px;
+  margin-left: 5px;
+}
+
+.topbar__logo {
+  display: flex;
+  align-items: center;
+}
+
+.topbar__container--rigth {
+  height: 45px;
+  display: flex;
+  justify-content: flex-end !important;
+}
+
+.user__icon {
+  font-size: 20px;
+  align-self: center;
+}
+.user__name {
+  font-size: 12px;
+}
