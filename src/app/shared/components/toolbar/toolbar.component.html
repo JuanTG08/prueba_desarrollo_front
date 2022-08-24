@@ -1,26 +1,18 @@
 <mat-toolbar class="mat-toolbar">
-  <span>Lansanet SAS</span>
+  <span (click)="redirectCard('home')" class="title-redirect" title="Lansanet">TEST</span>
   <span class="spacer"></span>
 
-  <div fxLayout="row" fxLayoutAlign="center">
-    <span class="user__name">UwU</span>
+  <div *ngIf="verifyUser()" fxLayout="row" fxLayoutAlign="center">
+    <span class="user__name">{{ nameUser }}</span>
   </div>
-  <div>
+  <div *ngIf="verifyUser()">
     <button mat-icon-button [matMenuTriggerFor]="menu" matTooltip="Menú">
       <mat-icon>more_vert</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item [routerLink]="['manage-roles']">
-        <mat-icon>group</mat-icon>
-        <span>Administrar Roles</span>
-      </button>
-      <button mat-menu-item>
-        <mat-icon>home</mat-icon>
-        <span>Página Principal</span>
-      </button>
-      <button mat-menu-item [routerLink]="['/login']">
+      <button mat-menu-item (click)="exit()">
         <mat-icon>logout</mat-icon>
-        <span>Salir de la Aplicación</span>
+        <span>Salir</span>
       </button>
     </mat-menu>
   </div>

@@ -1,0 +1,25 @@
+.container-cards {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.children-card {
+    max-width: 200px;
+}
+
+.btn-card-view {
+    width: 100%;
+}
+
+.miniature-card-view {
+    max-height: 200px;
+    overflow: hidden;
+}
+.miniature-card-view img {
+    width: 100%;
+    height: auto;
+    max-height: 200px;
+}

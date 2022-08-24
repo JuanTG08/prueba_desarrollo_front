@@ -17,6 +17,11 @@ const routes: Routes = [
     path: 'home',
     loadChildren: () => import('./screens/home/home.module').then((m) => m.HomeModule),
     canActivate: [AuthGuard],
+  },
+  {
+    path: 'antenna',
+    loadChildren: () => import('./screens/antenna/antenna.module').then((m) => m.AntennaModule),
+    canActivate: [AuthGuard],
   }
 ];
 

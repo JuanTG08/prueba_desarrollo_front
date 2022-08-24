@@ -8,11 +8,13 @@ import { MaterialModule } from './material/material.module';
 
 // Components
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
+import { SnakBarComponent } from './components/snak-bar/snak-bar.component';
+import { LoadingComponent } from './components/loading/loading.component';
 
 
 
 @NgModule({
-  declarations: [ToolbarComponent],
+  declarations: [ToolbarComponent, SnakBarComponent, LoadingComponent],
   imports: [
     CommonModule,
     RouterModule,
@@ -20,6 +22,7 @@ import { ToolbarComponent } from './components/toolbar/toolbar.component';
   ],
   exports: [
     ToolbarComponent,
+    LoadingComponent,
     CommonModule,
     RouterModule,
     HttpClientModule,
