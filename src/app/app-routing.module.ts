@@ -22,7 +22,19 @@ const routes: Routes = [
     path: 'admin-profiles',
     loadChildren: () => import('./screens/admin-profile/admin-profile.module').then((m) => m.AdminProfileModule),
     canActivate: [AuthGuard],
-  }
+  },
+  {
+    path: 'notPermits',
+    loadChildren: () => import('./screens/error/error.module').then((m) => m.ErrorModule),
+  },
+  {
+    path: 'underConstruction',
+    loadChildren: () => import('./screens/error/error.module').then((m) => m.ErrorModule),
+  },
+  {
+    path: '**',
+    loadChildren: () => import('./screens/error/error.module').then((m) => m.ErrorModule),
+  },
 ];
 
 @NgModule({
