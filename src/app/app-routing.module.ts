@@ -24,7 +24,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'notPermits',
+    path: 'not-permits',
     loadChildren: () => import('./screens/error/error.module').then((m) => m.ErrorModule),
   },
   {
