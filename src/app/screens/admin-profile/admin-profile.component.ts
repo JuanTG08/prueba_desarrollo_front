@@ -27,6 +27,8 @@ export class AdminProfileComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
+  checkedSelcted = {};
+
   constructor(
     private service: AdminProfileService,
     private route: Router,
@@ -100,11 +102,66 @@ export class AdminProfileComponent implements OnInit {
   }
 
   renderSelectCheckbox(rolePath: any, access_page: any): boolean {
-    return rolePath.filter(
-      ([{ path, method }]) =>
-        path === access_page.path && method === access_page.method
-    ).length == 0
-      ? false
-      : true;
+    const rolex =
+      rolePath.filter(
+        ([{ path, method }]) =>
+          path === access_page.path && method === access_page.method
+      ).length == 0
+        ? false
+        : true;
+    if (rolex) {
+      this.checkedSelcted = {
+        [`_${rolePath._id}`]: {
+          [access_page.from]: {
+            path: access_page.path,
+            method: access_page.method,
+          },
+        },
+      };
+    }
+    return rolex;
   }
+
+  saveSelectCheck(_idRole: string, toBack: boolean = false) {
+    let dataSend = {};
+    if (toBack) {
+      const backListChecked = this.pagesListBack
+        .filter(({ _id }) => {
+          const check: any = document.getElementById(_idRole + _id);
+          return check.checked;
+        })
+        .map(({ path, method }) => {
+          return { path, method };
+        });
+      dataSend = {
+        toBack: backListChecked,
+      };
+    } else {
+      const frontListChecked = this.pagesListFront
+        .filter(({ _id }) => {
+          const check: any = document.getElementById(_idRole + _id);
+          return check.checked;
+        })
+        .map(({ path, method }) => {
+          return { path, method };
+        });
+      dataSend = {
+        toFront: frontListChecked,
+      };
+    }
+
+    this.service
+      .updateRoles(dataSend, _idRole)
+      .then((res: any) => {
+        console.log(res);
+        this._snack.open(res.message, 'Ok', {
+          duration: 10000,
+        });
+      })
+      .catch((err) => this._snack.open('Error en la conexión', 'Ok'));
+
+    console.log(dataSend);
+  }
+
+  selectedCheck(rolePath: any, access_page: any) {}
 }

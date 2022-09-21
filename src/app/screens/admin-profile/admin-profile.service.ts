@@ -30,4 +30,8 @@ export class AdminProfileService {
   async updateAccessPage(data: any, _id: string) {
     return this.http.put(`${this.URL_API_ACCESS_PAGE}/handdler-RUDD-access-page/${_id}`, data).toPromise();
   }
+
+  async updateRoles(data: any, _id: string) {
+    return this.http.put(`${this.URL_API_ROLE}/handdler-RUDD-rol/${_id}`, data).toPromise();
+  }
 }
