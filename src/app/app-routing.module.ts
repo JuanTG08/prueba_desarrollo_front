@@ -19,8 +19,8 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'antenna',
-    loadChildren: () => import('./screens/antenna/antenna.module').then((m) => m.AntennaModule),
+    path: 'admin-profile',
+    loadChildren: () => import('./screens/admin-profile/admin-profile.module').then((m) => m.AdminProfileModule),
     canActivate: [AuthGuard],
   }
 ];
