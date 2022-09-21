@@ -59,10 +59,9 @@ export class LoginComponent implements OnInit {
     };
     this.service.loginAuthHandler(data)
       .then((res: IResponse) => {
-        if (!res.error && res.statusCode === 200 && res.others) {
-          this.service.setTokenAuth(res.others.token);
-
-          this.service.setLocalUser(JSON.stringify(res.others.dataUser));
+        if (!res.error && res.statusCode === 200 && res.payload) {
+          this.service.setTokenAuth(res.payload.token);
+          this.service.setLocalUser(JSON.stringify(res.payload.dataUser));
           this.router.navigate(['/home']);
         } else {
           const message =

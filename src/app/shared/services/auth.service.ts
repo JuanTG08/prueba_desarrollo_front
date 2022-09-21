@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 export class AuthService {
   tokenName: string = 'Lansanet-Auth-Token';
   keyUsername: string = 'Lansanet-Key-User';
-  URL_API: string = `${environment.URL_API + environment.PORT_API}/api/users`;
+  URL_API: string = `${environment.URL_API + environment.PORT_API}`;
   URL_API_AUTH: string = `${environment.URL_API + environment.PORT_API}/api/auth`;
 
   constructor(
@@ -43,6 +43,7 @@ export class AuthService {
   }
 
   decodeToken(token: string) {
+    if (!token) return false;
     return JSON.parse(atob(token));
   }
 
@@ -51,7 +52,7 @@ export class AuthService {
   }
 
   loginAuthHandler(dataLogin: IAuthDataLogin) {
-    return this.http.post(`${this.URL_API}/loginUser`, dataLogin).toPromise();
+    return this.http.post(`${this.URL_API}/auth/login`, dataLogin).toPromise();
   }
 
   isTokenActive(iat: number): boolean {
