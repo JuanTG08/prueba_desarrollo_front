@@ -1,0 +1,54 @@
+<div class="container-dialog">
+  <h2 class="subtitle">{{ data.funcionality }} Acceso a la pagina</h2>
+  <form [formGroup]="formDialogGroup">
+    <mat-form-field class="form-input-all" appearance="fill">
+      <mat-label>Nombre</mat-label>
+      <input
+        matInput
+        type="text"
+        formControlName="name"
+        cdkFocusInitial
+        required
+      />
+      <mat-error>{{ getErrorMessage("name") }}</mat-error>
+    </mat-form-field>
+    <mat-form-field class="form-input-all" appearance="fill">
+      <mat-label>Descripción</mat-label>
+      <textarea matInput formControlName="description" required rows="4"></textarea>
+      <mat-error>{{ getErrorMessage("description") }}</mat-error>
+    </mat-form-field>
+    <mat-form-field class="form-input-all" appearance="fill">
+      <mat-label>URL / Path</mat-label>
+      <input
+        matInput
+        type="text"
+        formControlName="path"
+        cdkFocusInitial
+        required
+      />
+      <mat-error>{{ getErrorMessage("path") }}</mat-error>
+    </mat-form-field>
+    <mat-form-field class="form-input-all" appearance="fill">
+      <mat-label>Metodo</mat-label>
+      <mat-select formControlName="method" required>
+        <mat-option value="GET">GET</mat-option>
+        <mat-option value="POST">POST</mat-option>
+        <mat-option value="PUT">PUT</mat-option>
+        <mat-option value="DELETE">DELETE</mat-option>
+      </mat-select>
+      <mat-error>{{ getErrorMessage("method") }}</mat-error>
+    </mat-form-field>
+    <mat-form-field class="form-input-all" appearance="fill">
+      <mat-label>Dirigido A</mat-label>
+      <mat-select formControlName="from" required>
+        <mat-option value="front">Vista Usuario</mat-option>
+        <mat-option value="back">Funcionalidad Interna</mat-option>
+      </mat-select>
+      <mat-error>{{ getErrorMessage("from") }}</mat-error>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" (click)="submitAccess()">
+        {{ accessUpdating ? "Actualizar" : "Crear" }}
+    </button>
+  </form>
+</div>

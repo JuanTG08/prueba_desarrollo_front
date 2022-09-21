@@ -19,7 +19,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'admin-profile',
+    path: 'admin-profiles',
     loadChildren: () => import('./screens/admin-profile/admin-profile.module').then((m) => m.AdminProfileModule),
     canActivate: [AuthGuard],
   }
