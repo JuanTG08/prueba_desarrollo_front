@@ -13,8 +13,6 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
   formGroup: FormGroup;
-  reCAPTCHAToken: string = '';
-  tokenVisible: boolean = false;
   hidePass: boolean = true; // Controlador de la vista del input password
 
   constructor(
@@ -67,6 +65,10 @@ export class LoginComponent implements OnInit {
         }
       })
       .catch((err) => this._snack.open('Error de Conexión', 'Cerrar'));
+  }
+
+  goToRegister() {
+    this.router.navigate(['/register']);
   }
 
   getErrorMessage(nameInput: string) {

@@ -8,15 +8,12 @@ import { CoreModule } from './core/core.module';
 import { AdminProfileComponent } from './screens/admin-profile/admin-profile.component';
 import { ErrorComponent } from './screens/error/error.component';
 import { VehicleComponent } from './screens/vehicle/vehicle.component';
-import { RegisterComponent } from './screens/register/register.component';
-
 @NgModule({
   declarations: [
     AppComponent,
     AdminProfileComponent,
     ErrorComponent,
     VehicleComponent,
-    RegisterComponent,
   ],
   imports: [
     BrowserModule,

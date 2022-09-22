@@ -36,8 +36,10 @@
           </button>
           <mat-error>{{ getErrorMessage("password") }}</mat-error>
         </mat-form-field>
-
         <div class="container-btn-login">
+          <button mat-fab color="warn" aria-label="Example icon button with a filter list icon" (click)="goToRegister()">
+            <mat-icon>person_add</mat-icon>
+          </button>
           <button
             mat-mini-fab
             color="primary"

@@ -12,7 +12,7 @@ export class AuthService {
   tokenName: string = 'Lansanet-Auth-Token';
   keyUsername: string = 'Lansanet-Key-User';
   URL_API: string = `${environment.URL_API + environment.PORT_API}`;
-  URL_API_AUTH: string = `${environment.URL_API + environment.PORT_API}/api/auth`;
+  URL_API_AUTH: string = `${environment.URL_API + environment.PORT_API}/auth`;
 
   constructor(
     private http: HttpClient,
@@ -66,6 +66,10 @@ export class AuthService {
 
   isLoggedIn(): Promise<Response> {
     return this.http.get<Response>(`${this.URL_API_AUTH}/verify`).toPromise();
+  }
+
+  isRegister(data: any): Promise<Response> {
+    return this.http.post<Response>(`${this.URL_API_AUTH}/register`, data).toPromise();
   }
 
   getMineID(): string | boolean {

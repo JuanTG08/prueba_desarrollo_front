@@ -1,0 +1,25 @@
+.container-form {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+.container-login {
+    width: 80%;
+    padding: 20px;
+}
+.form-control {
+    width: 100%;
+}
+.container-btn-login {
+    width: 100%;
+    text-align: center;
+}
+.btn-login {
+    width: 70px;
+    height: 70px;
+}
+
+.container-btn-login button {
+    margin-left: 20px;
+}
