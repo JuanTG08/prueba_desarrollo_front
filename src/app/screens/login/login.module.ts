@@ -9,7 +9,7 @@ import { SharedModule } from '../../shared/shared.module';
   declarations: [LoginComponent],
   imports: [
     SharedModule,
-    LoginRoutingModule
+    LoginRoutingModule,
   ]
 })
 export class LoginModule { }

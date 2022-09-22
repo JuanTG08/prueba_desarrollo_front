@@ -1,14 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  FormGroup,
-  FormControl,
-  FormBuilder,
-  Validators,
-} from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../../shared/services/auth.service';
 import { IAuthDataLogin } from '../../shared/interfaces/IAuth';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { SnakBarComponent } from '../../shared/components/snak-bar/snak-bar.component';
 import { IResponse } from '../../shared/interfaces/IResponse';
 import { Router } from '@angular/router';
 
@@ -19,14 +13,15 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
   formGroup: FormGroup;
-
+  reCAPTCHAToken: string = '';
+  tokenVisible: boolean = false;
   hidePass: boolean = true; // Controlador de la vista del input password
 
   constructor(
     private service: AuthService,
     private formBuilder: FormBuilder,
     private _snack: MatSnackBar,
-    private router: Router
+    private router: Router,
   ) {
     this.formGroup = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
@@ -39,6 +34,7 @@ export class LoginComponent implements OnInit {
         ],
       ],
     });
+    /* Recaptcha */
   }
 
   ngOnInit(): void {
@@ -57,7 +53,8 @@ export class LoginComponent implements OnInit {
       email,
       password,
     };
-    this.service.loginAuthHandler(data)
+    this.service
+      .loginAuthHandler(data)
       .then((res: IResponse) => {
         if (!res.error && res.statusCode === 200 && res.payload) {
           this.service.setTokenAuth(res.payload.token);
@@ -68,7 +65,8 @@ export class LoginComponent implements OnInit {
             res.statusCode == 501 ? 'Usuario no Existente' : res.message;
           this._snack.open(message, 'Cerrar', { duration: 4000 });
         }
-      }).catch(err => this._snack.open('Error de Conexión', 'Cerrar'));
+      })
+      .catch((err) => this._snack.open('Error de Conexión', 'Cerrar'));
   }
 
   getErrorMessage(nameInput: string) {
