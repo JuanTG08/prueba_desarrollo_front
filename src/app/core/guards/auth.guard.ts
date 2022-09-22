@@ -19,7 +19,7 @@ export class AuthGuard implements CanActivate {
     const token: any = this.service.getTokenAuth();
     if (!token) this.service.logOut();
     // Obtenemos el token descodificado
-    const tokenDesc = this.service.decodeToken(token.toString().split('.')[1]);
+    const tokenDesc: any = this.service.decodeToken(token.toString().split('.')[1]);
     if (!tokenDesc) {
       this.service.logOut();
       return false;

@@ -1,1 +1,25 @@
-<p>vehicle works!</p>
+<div class="container_cards">
+  <mat-card class="example-card">
+    <mat-card-header>
+      <mat-card-title>Añadir Vehiculo</mat-card-title>
+    </mat-card-header>
+    <img mat-card-image src="./assets/add_.svg" alt="Añadir Vehiculo" />
+    <mat-card-actions>
+      <button mat-raised-button color="primary" class="add_vehicle" (click)="openDialog('Crear')">Añadir</button>
+    </mat-card-actions>
+  </mat-card>
+  <!-- Vehicles -->
+  <mat-card class="example-card" *ngFor="let vehicle of listVehicles">
+    <mat-card-header>
+      <mat-card-title>{{ vehicle.placa }}</mat-card-title>
+    </mat-card-header>
+    <img mat-card-image src="./assets/vehicles.svg" alt="Añadir Vehiculo" />
+    <mat-card-content>
+        <mat-card-subtitle><strong>Disponible:</strong> {{ vehicle.travel_status ? 'Si' : 'No' }}</mat-card-subtitle>
+        <mat-card-subtitle><strong>Estado:</strong> {{ vehicle.status ? 'Activo' : 'Inactivo' }}</mat-card-subtitle>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="openDialog('Actualizar', vehicle)" class="add_vehicle">Actualizar</button>
+    </mat-card-actions>
+  </mat-card>
+</div>

@@ -1,0 +1,15 @@
+.container_cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+.example-card {
+  max-width: 300px;
+  max-height: 366px;
+  overflow: auto;
+}
+
+.add_vehicle {
+  width: 100%;
+}

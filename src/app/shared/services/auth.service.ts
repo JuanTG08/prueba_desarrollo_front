@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { IAuthDataLogin } from '../interfaces/IAuth';
 import { Router } from '@angular/router';
+import jwt_decode from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
-    private route: Router
+    private route: Router,
   ) { }
 
   // Establecemos el Token
@@ -44,7 +45,11 @@ export class AuthService {
 
   decodeToken(token: string) {
     if (!token) return false;
-    return JSON.parse(atob(token));
+    const getDataToken = atob(token);
+    if (!getDataToken) return false;
+    const convertToJson = JSON.parse(getDataToken);
+    if (!convertToJson) return false;
+    return convertToJson;
   }
 
   clearTokenAuth() {
@@ -61,6 +66,20 @@ export class AuthService {
 
   isLoggedIn(): Promise<Response> {
     return this.http.get<Response>(`${this.URL_API_AUTH}/verify`).toPromise();
+  }
+
+  getMineID(): string | boolean {
+    const token = this.getTokenAuth();
+    if (!token) return false;
+    try {
+      const decodeToken: any = jwt_decode(token);
+      if (!decodeToken) return false;
+      const { _id } = decodeToken;
+      if (!_id) return false;
+      return _id;
+    } catch (error) {
+      return false;
+    }
   }
 
   async logOut() {
