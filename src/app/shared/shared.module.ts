@@ -9,12 +9,12 @@ import { MaterialModule } from './material/material.module';
 // Components
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { SnakBarComponent } from './components/snak-bar/snak-bar.component';
-import { LoadingComponent } from './components/loading/loading.component';
-
+import { MapsModule } from './components/maps/maps.module';
+/* MAPS */
 
 
 @NgModule({
-  declarations: [ToolbarComponent, SnakBarComponent, LoadingComponent],
+  declarations: [ToolbarComponent, SnakBarComponent],
   imports: [
     CommonModule,
     RouterModule,
@@ -22,7 +22,7 @@ import { LoadingComponent } from './components/loading/loading.component';
   ],
   exports: [
     ToolbarComponent,
-    LoadingComponent,
+    MapsModule,
     CommonModule,
     RouterModule,
     HttpClientModule,

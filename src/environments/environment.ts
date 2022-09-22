@@ -6,6 +6,7 @@ export const environment = {
   production: false,
   URL_API: 'http://localhost',
   PORT_API: ':8000',
+  API_GOOGLE_MAPS: 'AIzaSyAKxbY5Hj3G4FXz5fQjdS6-BMjfCjeL-W4',
 };
 
 /*

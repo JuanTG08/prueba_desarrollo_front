@@ -23,3 +23,40 @@
     height: auto;
     max-height: 200px;
 }
+
+.container-map {
+    height: 600px;
+}
+
+
+.form-travel {
+    width: 100%;
+}
+.btn-spand-travel {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+.btn-spand-travel h2 {
+    padding: 0;
+    margin: 0;
+}
+
+.form-container-travel {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.form-input {
+    padding: 0;
+}
+
+.form-input-all {
+    width: 40%;
+}
+
+.text-area-input {
+    width: 75%;
+}

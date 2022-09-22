@@ -1,18 +1,48 @@
-<div class="container-cards">
-    <mat-card class="children-card">
-        <mat-card-header>
-            <mat-card-title>Antenas</mat-card-title>
-        </mat-card-header>
-        <div class="miniature-card-view">
-            <img src="https://www.optimanet.com.ar/wp-content/uploads/ubiquiti-antena.png" alt="Photo of a Shiba Inu">
-        </div>
-        <mat-card-content>
-            <mat-card-subtitle>
-                <p>Configuración Basica de las Antenas</p>
-            </mat-card-subtitle>
-        </mat-card-content>
-        <mat-card-actions>
-            <button mat-raised-button color="primary" class="btn-card-view" (click)="redirectCard()">Acceder</button>
-        </mat-card-actions>
-    </mat-card>
+<div class="container-map">
+  <div class="form-travel">
+    <button
+      mat-raised-button
+      color="primary"
+      class="btn-spand-travel"
+      (click)="showFormTravelHanddler()"
+    >
+      <h2>Pedir un Viaje</h2>
+    </button>
+    <form
+      class="form-container-travel"
+      [formGroup]="formTravelGroup"
+      *ngIf="showFormTravel"
+    >
+      <mat-form-field class="form-input-all" appearance="fill">
+        <mat-label>Punto de Inicio</mat-label>
+        <mat-select formControlName="location_init" (selectionChange)="selectChangeInput('location_init', 'location_end')" required>
+          <mat-option value="my_">Mi Posición</mat-option>
+          <mat-option value="select_to_map">Selieccionar en el Mapa</mat-option>
+        </mat-select>
+        <mat-error>{{ getErrorMessage("location_init") }}</mat-error>
+      </mat-form-field>
+      <mat-form-field class="form-input-all" appearance="fill">
+        <mat-label>Punto Final</mat-label>
+        <mat-select formControlName="location_end" (selectionChange)="selectChangeInput('location_end', 'location_init')" required>
+          <mat-option value="my_">Mi Posición</mat-option>
+          <mat-option value="select_to_map">Selieccionar en el Mapa</mat-option>
+        </mat-select>
+        <mat-error>{{ getErrorMessage("location_end") }}</mat-error>
+      </mat-form-field>
+      <mat-form-field class="text-area-input" appearance="fill">
+        <mat-label>Comentario</mat-label>
+        <textarea
+          matInput
+          formControlName="comment"
+          required
+          rows="4"
+        ></textarea>
+        <mat-error>{{ getErrorMessage("comment") }}</mat-error>
+      </mat-form-field>
+      <button mat-fab color="warn" type="submit">
+        <mat-icon>send</mat-icon>
+      </button>
+    </form>
+  </div>
+  <app-map-screen></app-map-screen>
 </div>
