@@ -10,6 +10,14 @@
       <mat-icon>more_vert</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="redirectCard('profile')">
+        <mat-icon>person</mat-icon>
+        <span>Perfil</span>
+      </button>
+      <button mat-menu-item (click)="redirectCard('profile')" *ngIf="true">
+        <mat-icon>directions_car_filled</mat-icon>
+        <span>Mis Vehiculos</span>
+      </button>
       <button mat-menu-item (click)="exit()">
         <mat-icon>logout</mat-icon>
         <span>Salir</span>

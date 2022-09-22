@@ -8,12 +8,14 @@ import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core/core.module';
 import { AdminProfileComponent } from './screens/admin-profile/admin-profile.component';
 import { ErrorComponent } from './screens/error/error.component';
+import { VehicleComponent } from './screens/vehicle/vehicle.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AdminProfileComponent,
     ErrorComponent,
+    VehicleComponent,
   ],
   imports: [
     BrowserModule,

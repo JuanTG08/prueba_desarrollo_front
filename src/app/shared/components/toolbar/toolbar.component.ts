@@ -15,15 +15,19 @@ export class ToolbarComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.nameUser = this.service.getLocalUser();
   }
 
   verifyUser(): boolean {
+    this.nameUser = this.service.getLocalUser();
     return !!this.service.getTokenAuth();
   }
 
   redirectCard(path: string) {
     this.router.navigate([path]);
+  }
+
+  vehicleAccess() {
+    console.log(this.service.getTokenAuth());
   }
 
   exit() {

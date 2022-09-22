@@ -19,6 +19,16 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: 'profile',
+    loadChildren: () => import('./screens/home/home.module').then((m) => m.HomeModule),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'vehicle',
+    loadChildren: () => import('./screens/vehicle/vehicle.module').then((m) => m.VehicleModule),
+    canActivate: [AuthGuard],
+  },
+  {
     path: 'admin-profiles',
     loadChildren: () => import('./screens/admin-profile/admin-profile.module').then((m) => m.AdminProfileModule),
     canActivate: [AuthGuard],
