@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { PlacesService } from '../../services/places.service';
+import { IPositionSelectedSend } from '../../../../interfaces/IPositionSelectedSend';
 
 @Component({
   selector: 'app-map-view',
@@ -7,8 +8,15 @@ import { PlacesService } from '../../services/places.service';
   styleUrls: ['./map-view.component.scss'],
 })
 export class MapViewComponent implements OnInit {
+
+  @Output() selectedPoitns = new EventEmitter<google.maps.Marker[]>();
+
   map: google.maps.Map;
   markers: google.maps.Marker[] = [];
+
+  directionService: google.maps.DirectionsService = new google.maps.DirectionsService();;
+  directionsRenderer: google.maps.DirectionsRenderer = new google.maps.DirectionsRenderer();
+
   constructor(private placesService: PlacesService) {}
 
   ngOnInit(): void {
@@ -20,43 +28,46 @@ export class MapViewComponent implements OnInit {
       document.getElementById('map-google') as HTMLElement,
       {
         center: myPostition,
-        zoom: 12,
+        zoom: 15,
         mapTypeId: 'terrain',
       }
     );
 
     // Evento para añardir marcadores
-    this.map.addListener('click', (event: google.maps.MapMouseEvent) =>
-      this.addMarkers(event.latLng!, 'Posición añadida')
-    );
-
-    // Adds a marker at the center of the map.
-    this.addMarkers(myPostition, 'Mi posición');
-
-    const popup = new google.maps.InfoWindow()
-      .setContent(`
-        <h6>Aquí estoy</h6>
-        <span>Estoy aquí</span>
-      `);
+    this.map.addListener('click', (event: google.maps.MapMouseEvent) => {
+      if (this.markers.length <= 1) {
+        if (this.markers.length == 0) this.addMarkers(event.latLng!, { title: 'Inicial', icon: './assets/home.svg' });
+        else this.addMarkers(event.latLng!, { title: 'Final', icon: './assets/current_position.svg' });
+      }
+      if (this.markers.length === 2) {
+        this.directionsRenderer.setMap(this.map);
+        this.calculateAndDisplayRoute(this.directionService, this.directionsRenderer);
+      }
+    });
   }
 
   // Añadimos los marcadores
-  addMarkers(position: google.maps.LatLng | google.maps.LatLngLiteral, title: string) {
+  addMarkers(
+    position: google.maps.LatLng | google.maps.LatLngLiteral,
+    { title = '', icon = null }
+  ) {
     const marker = new google.maps.Marker({
       position,
       map: this.map,
+      icon,
     });
-    const popup = new google.maps.InfoWindow();
     // Evento al hacerse click a un marker
-    marker.addListener("click", () => {
-      popup.close();
-      popup.setContent(title),
-      popup.open(marker.getMap(), marker);
-    })
-    popup.close();
-    popup.setContent(title),
-    popup.open(marker.getMap(), marker);
+    marker.addListener('click', () => {
+      this.popup(marker, title);
+    });
     this.markers.push(marker);
+  }
+
+  popup(marker: google.maps.Marker, title) {
+    const popup = new google.maps.InfoWindow();
+    popup.close();
+    popup.setContent(title);
+    popup.open(marker.getMap(), marker);
   }
 
   // Establecemos todos los marcadores en el mapa
@@ -80,5 +91,30 @@ export class MapViewComponent implements OnInit {
   deleteMarkers() {
     this.hideMarkers();
     this.markers = [];
+    this.directionsRenderer.setMap(null);
+    this.sendDataToFather();
+  }
+
+  // Calculamos la distancia de un punto a otro
+  calculateAndDisplayRoute(
+    directionsService: google.maps.DirectionsService,
+    directionsRenderer: google.maps.DirectionsRenderer,
+  ) {
+    directionsService.route({
+      origin: this.markers[0].getPosition().toJSON(),
+      destination: this.markers[1].getPosition().toJSON(),
+      travelMode: google.maps.TravelMode["DRIVING"],
+    }, (response, status) => {
+      if (status == 'OK') {
+        this.sendDataToFather();
+        return directionsRenderer.setDirections(response)
+      };
+      alert('Calculo de direcciones fallida');
+    })
+  }
+
+  // Enviamos los datos al Padre
+  sendDataToFather() {
+    this.selectedPoitns.emit(this.markers);
   }
 }

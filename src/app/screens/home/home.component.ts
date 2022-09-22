@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { IPositionSelectedSend } from '../../shared/interfaces/IPositionSelectedSend';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { AuthService } from '../../shared/services/auth.service';
+import { TravelsService } from '../../shared/services/travels.service';
 
 @Component({
   selector: 'app-home',
@@ -9,33 +13,70 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class HomeComponent implements OnInit {
   formTravelGroup!: FormGroup;
-  showFormTravel: boolean = true;
+  showFormTravel: boolean = false;
 
-  constructor(private router: Router, private formBuilder: FormBuilder) {}
+  selectedPoitns!: google.maps.Marker[];
+  my_id!: string | boolean;
+
+  constructor(
+    private router: Router,
+    private formBuilder: FormBuilder,
+    private _snack: MatSnackBar,
+    private service: TravelsService,
+    private serviceAuth: AuthService
+  ) {}
 
   ngOnInit(): void {
+    this.getId();
     this.formTravelGroup = this.formBuilder.group({
       comment: ['', Validators.minLength(4)],
-      location_init: ['my_', Validators.minLength(1)],
-      location_end: ['select_to_map', Validators.minLength(1)],
     });
+  }
+
+  async getId() {
+    this.my_id = await this.serviceAuth.getMineID();
   }
 
   /* Eventos del formulario */
   showFormTravelHanddler() {
     this.showFormTravel = !this.showFormTravel;
   }
-  selectChangeInput(input: string, nexInput: string) {
-    const selectBox = this.formTravelGroup.get(input);
-    const selectNextBox = this.formTravelGroup.get(nexInput);
-    if (selectNextBox.value == 'my_' && selectBox.value == 'my_') {
-      alert('No puedes seleccionar tu posición como punto de partida y final');
-      selectBox.setValue('select_to_map');
-    }
+
+  async sendCreateTravel() {
+    if (!this.selectedPoitns || this.selectedPoitns.length < 2)
+      return this._snack.open(
+        'Por favor selecciona dos puntos en el Mapa',
+        'Ok'
+      );
+    if (!this.my_id)
+      return this._snack.open('Error al procesar el usuario', 'Ok');
+    if (this.formTravelGroup.invalid)
+      return this._snack.open('Error en los campos, por favor Verficar', 'Ok');
+    const dataSend = {
+      ...this.formTravelGroup.value,
+      client: this.my_id,
+      location_init: this.selectedPoitns[0].getPosition().toJSON(),
+      location_end: this.selectedPoitns[1].getPosition().toJSON(),
+    };
+
+    await this.service
+      .createTravel(dataSend)
+      .then((res: any) => {
+        this._snack.open(res.message, 'Ok', {
+          duration: 10000,
+        });
+        if (res.statusCode == 200) this.cleanFormCreateTravel();
+      })
+      .catch((err) => this._snack.open('Error en la conexión', 'Ok'));
   }
 
-  redirectCard() {
-    this.router.navigate(['/']);
+  cleanFormCreateTravel() {
+    this.formTravelGroup.get('comment').setValue('');
+    this.showFormTravel = false;
+  }
+
+  selectedPoitnsHanddler($event) {
+    this.selectedPoitns = $event;
   }
 
   getErrorMessage(nameInput: string) {
