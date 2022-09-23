@@ -86,6 +86,20 @@ export class AuthService {
     }
   }
 
+  getMyRole(): string | boolean {
+    const token = this.getTokenAuth();
+    if (!token) return false;
+    try {
+      const decodeToken: any = jwt_decode(token);
+      if (!decodeToken) return false;
+      const { role } = decodeToken;
+      if (!role) return false;
+      return role;
+    } catch (error) {
+      return false;
+    }
+  }
+
   async logOut() {
     await this.clearTokenAuth();
     this.route.navigate(['/login']);

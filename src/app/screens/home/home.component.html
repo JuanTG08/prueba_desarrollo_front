@@ -1,5 +1,5 @@
 <div class="container-map">
-  <div class="form-travel">
+  <div class="form-travel" *ngIf="!isPropietario">
     <button
       mat-raised-button
       color="primary"
@@ -30,86 +30,27 @@
   </div>
   <div class="container-site-work">
     <div class="container-mapa-main">
-      <app-map-screen  (selectedPoitns)="selectedPoitnsHanddler($event)"></app-map-screen>
+      <app-map-screen
+        (selectedPoitns)="selectedPoitnsHanddler($event)"
+      ></app-map-screen>
     </div>
-    <div *ngIf="true" class="container-panel-task">
-      <mat-card class="card-item-travel">
-        <mat-card-subtitle>Hace 10 min</mat-card-subtitle>
-        <mat-card-title>Nombre Cliente</mat-card-title>
-        <mat-card-content>
-          <p>Viaje para la ubicación 10 de mayo</p>
-        </mat-card-content>
-        <mat-divider inset></mat-divider>
-        <mat-card-actions>
-          <button mat-raised-button color="primary">Mostrar en el Mapa</button>
-          <button mat-raised-button color="accent">Aceptar</button>
-        </mat-card-actions>
-      </mat-card>
-      <br>
-      <mat-card class="card-item-travel">
-        <mat-card-subtitle>Hace 10 min</mat-card-subtitle>
-        <mat-card-title>Nombre Cliente</mat-card-title>
-        <mat-card-content>
-          <p>Viaje para la ubicación 10 de mayo</p>
-        </mat-card-content>
-        <mat-divider inset></mat-divider>
-        <mat-card-actions>
-          <button mat-raised-button color="primary">Mostrar en el Mapa</button>
-          <button mat-raised-button color="accent">Aceptar</button>
-        </mat-card-actions>
-      </mat-card>
-      <br>
-      <mat-card class="card-item-travel">
-        <mat-card-subtitle>Hace 10 min</mat-card-subtitle>
-        <mat-card-title>Nombre Cliente</mat-card-title>
-        <mat-card-content>
-          <p>Viaje para la ubicación 10 de mayo</p>
-        </mat-card-content>
-        <mat-divider inset></mat-divider>
-        <mat-card-actions>
-          <button mat-raised-button color="primary">Mostrar en el Mapa</button>
-          <button mat-raised-button color="accent">Aceptar</button>
-        </mat-card-actions>
-      </mat-card>
-      <br>
-      <mat-card class="card-item-travel">
-        <mat-card-subtitle>Hace 10 min</mat-card-subtitle>
-        <mat-card-title>Nombre Cliente</mat-card-title>
-        <mat-card-content>
-          <p>Viaje para la ubicación 10 de mayo</p>
-        </mat-card-content>
-        <mat-divider inset></mat-divider>
-        <mat-card-actions>
-          <button mat-raised-button color="primary">Mostrar en el Mapa</button>
-          <button mat-raised-button color="accent">Aceptar</button>
-        </mat-card-actions>
-      </mat-card>
-      <br>
-      <mat-card class="card-item-travel">
-        <mat-card-subtitle>Hace 10 min</mat-card-subtitle>
-        <mat-card-title>Nombre Cliente</mat-card-title>
-        <mat-card-content>
-          <p>Viaje para la ubicación 10 de mayo</p>
-        </mat-card-content>
-        <mat-divider inset></mat-divider>
-        <mat-card-actions>
-          <button mat-raised-button color="primary">Mostrar en el Mapa</button>
-          <button mat-raised-button color="accent">Aceptar</button>
-        </mat-card-actions>
-      </mat-card>
-      <br>
-      <mat-card class="card-item-travel">
-        <mat-card-subtitle>Hace 10 min</mat-card-subtitle>
-        <mat-card-title>Nombre Cliente</mat-card-title>
-        <mat-card-content>
-          <p>Viaje para la ubicación 10 de mayo</p>
-        </mat-card-content>
-        <mat-divider inset></mat-divider>
-        <mat-card-actions>
-          <button mat-raised-button color="primary">Mostrar en el Mapa</button>
-          <button mat-raised-button color="accent">Aceptar</button>
-        </mat-card-actions>
-      </mat-card>
+    <div *ngIf="isPropietario" class="container-panel-task">
+      <div class="" *ngFor="let data of travel.listTravelAll">
+        <mat-card class="card-item-travel">
+          <mat-card-subtitle>{{ data.data_init }}</mat-card-subtitle>
+          <mat-card-content>
+            <p>{{ data.comment }}</p>
+          </mat-card-content>
+          <mat-divider inset></mat-divider>
+          <mat-card-actions>
+            <button mat-raised-button color="primary" (click)="setValuesForMap(data.location_init, data.location_end)">
+              Mostrar en el Mapa
+            </button>
+            <button mat-raised-button color="accent" (click)="acceptCar(data)">Aceptar</button>
+          </mat-card-actions>
+        </mat-card>
+        <br />
+      </div>
     </div>
   </div>
 </div>

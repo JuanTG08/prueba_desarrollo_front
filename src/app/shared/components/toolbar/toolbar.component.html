@@ -10,10 +10,6 @@
       <mat-icon>more_vert</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item (click)="redirectCard('profile')">
-        <mat-icon>person</mat-icon>
-        <span>Perfil</span>
-      </button>
       <button mat-menu-item (click)="redirectCard('admin-profiles')" *ngIf="true">
         <mat-icon>manage_accounts</mat-icon>
         <span>Administración</span>

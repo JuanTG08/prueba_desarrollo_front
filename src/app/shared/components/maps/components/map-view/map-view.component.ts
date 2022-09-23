@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { PlacesService } from '../../services/places.service';
 import { IPositionSelectedSend } from '../../../../interfaces/IPositionSelectedSend';
 
@@ -10,7 +10,7 @@ import { IPositionSelectedSend } from '../../../../interfaces/IPositionSelectedS
 export class MapViewComponent implements OnInit {
 
   @Output() selectedPoitns = new EventEmitter<google.maps.Marker[]>();
-
+  //@Input() propietario
   map: google.maps.Map;
   markers: google.maps.Marker[] = [];
 

@@ -18,16 +18,20 @@ export class HomeComponent implements OnInit {
   selectedPoitns!: google.maps.Marker[];
   my_id!: string | boolean;
 
+  isPropietario: Boolean = false;
+
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
     private _snack: MatSnackBar,
     private service: TravelsService,
-    private serviceAuth: AuthService
+    private serviceAuth: AuthService,
+    public travel: TravelsService,
   ) {}
 
   ngOnInit(): void {
     this.getId();
+    this.verifyPropietario();
     this.formTravelGroup = this.formBuilder.group({
       comment: ['', Validators.minLength(4)],
     });
@@ -35,6 +39,19 @@ export class HomeComponent implements OnInit {
 
   async getId() {
     this.my_id = await this.serviceAuth.getMineID();
+  }
+
+  async verifyPropietario() {
+    const role = await this.serviceAuth.getMyRole();
+    if (!role) return this._snack.open('Error en el usuario', 'Ok')
+    this.isPropietario = role == 'Propietario';
+  }
+
+  // Aceptamos los viajes
+  acceptCar(data: any) {
+    if (confirm('Deseas aceptar este viaje')) {
+      console.log(data)
+    }
   }
 
   /* Eventos del formulario */
@@ -77,6 +94,11 @@ export class HomeComponent implements OnInit {
 
   selectedPoitnsHanddler($event) {
     this.selectedPoitns = $event;
+  }
+
+  // Establecemos posicion en el mapa
+  setValuesForMap(locationInit: any, locationEnd: any) {
+    console.log(locationInit, locationEnd)
   }
 
   getErrorMessage(nameInput: string) {
